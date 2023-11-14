@@ -3,7 +3,7 @@ import { Layout } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import { Route, Routes } from "react-router-dom";
 
-function App() {
+const App = () => {
   return (
     <div>
       <Layout>
@@ -28,6 +28,6 @@ function App() {
       </Layout>
     </div>
   );
-}
+};
 
 export default App;
