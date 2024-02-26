@@ -27,16 +27,3 @@ def file_delete(path):
     else:
         return jsonify({"error": "해당 파일을 찾을 수 없습니다."}), 404
 
-def get_filename(path):
-    filenames = [file for file in os.listdir(path) if os.path.isfile(os.path.join(path, file))]
-    return filenames[0]
-
-def get_file_directory(path):
-    return os.path.dirname(path)
-
-def new_filename(path):
-    directory = get_file_directory(path)
-    filename = get_filename(path)
-    name, extend = filename.split(".")
-    return directory + "/" + name + "new." + extend
-

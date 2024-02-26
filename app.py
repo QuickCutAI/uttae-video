@@ -1,10 +1,11 @@
 from flask import Flask, request, jsonify, url_for
-import os
+from flask_cors import CORS
 
-from functions.file_control import save_file, file_delete, new_filename, get_filename
+from functions.file_control import save_file, file_delete
 from functions.video_control import remove_silent_parts
 
 app = Flask(__name__)
+CORS(app)
 
 UPLOAD_FOLDER = "uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -31,12 +32,12 @@ def delete_file():
 @app.route("/trim_video", methods=["PUT"])
 def trim_video():
     file_path = request.form.get("path")
-    new_path = new_filename(file_path)
+    new_path = file_path.replace(".mp4", "_new.mp4")
     remove_silent_parts(file_path, new_path)
 
     return jsonify({
         "file_url": url_for(
-            "uploaded_file", filename=get_filename(new_path)
+            "uploaded_file", filename=new_path.split("/")[-1]
         )
     })
 
