@@ -16,7 +16,7 @@ def remove_silent_parts(video_path, output_path):
     audio_segment = AudioSegment.from_file(audio_path, format="mp3")
 
     # 소리 안 나오는 부분 찾기
-    silent_ranges = detect_silence(audio_segment, min_silence_len=500, silence_thresh=-40)
+    silent_ranges = detect_silence(audio_segment, min_silence_len=2000, silence_thresh=-40)
 
     # 새로운 비디오 클립 생성
     new_video_clip = VideoFileClip(video_path)
@@ -25,8 +25,8 @@ def remove_silent_parts(video_path, output_path):
     segments = []
     start = 0
     for s_start, s_end in silent_ranges:
-        new_video_clip = video_clip.subclip(start, s_start / 1000)
-        start = s_end / 1000
+        new_video_clip = video_clip.subclip(start, s_start / 1000 + 1)
+        start = s_end / 1000 - 1
         segments.append(new_video_clip)
 
     # 새로운 비디오 파일로 저장
