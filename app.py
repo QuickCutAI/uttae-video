@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, url_for
+from flask import Flask, request, jsonify, url_for, send_file
 from flask_cors import CORS
 
 from functions.file_control import save_file, file_delete
@@ -9,6 +9,10 @@ CORS(app)
 
 UPLOAD_FOLDER = "uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+@app.route("/health")
+def health_chekc():
+    return "ok"
 
 @app.route("/upload", methods=["POST"])
 def upload_file():
@@ -37,9 +41,14 @@ def trim_video():
 
     return jsonify({
         "file_url": url_for(
-            "uploaded_file", filename=new_path.split("/")[-1]
+            "upload_file", filename=new_path.split("/")[-1]
         )
     })
+
+@app.route("/download", methods=["POST"])
+def download_file():
+    file_path = request.form.get("path")
+    return send_file(file_path, as_attachment=True)
 
 if __name__ == "__main__":
     app.run(debug=True)

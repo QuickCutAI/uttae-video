@@ -32,6 +32,8 @@ def remove_silent_parts(video_path, output_path):
     # 새로운 비디오 파일로 저장
     final_clip = concatenate_videoclips(segments)
     final_clip.write_videofile(output_path)
+    final_clip.close()
+    video_clip.close()
     
     # 임시 오디오 파일 삭제
     file_delete(audio_path)
