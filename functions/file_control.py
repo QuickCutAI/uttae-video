@@ -13,6 +13,7 @@ def save_file(file, folder):
 
     # 파일 저장
     file.save(filename)
+    file.close()
 
     # 파일 URL 반환
     file_url = url_for('uploaded_file', filename=file.filename)

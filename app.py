@@ -11,7 +11,7 @@ UPLOAD_FOLDER = "uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 @app.route("/health")
-def health_chekc():
+def health_check():
     return "ok"
 
 @app.route("/upload", methods=["POST"])
